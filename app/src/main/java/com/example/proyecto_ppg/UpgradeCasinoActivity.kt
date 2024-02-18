@@ -10,28 +10,39 @@ import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.util.Locale
 import kotlin.random.Random
 
-class UpgradeCasinoActivity :AppCompatActivity(), TextToSpeech.OnInitListener {
+class UpgradeCasinoActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
+    private lateinit var articulo: Articulo
     private lateinit var tts: TextToSpeech
     private lateinit var barra: UtilBar
     private lateinit var objPersonaje: Personaje
     private lateinit var backButton: Button
     private lateinit var rueda: ImageView
+    private lateinit var ruleta: Ruleta
+    private lateinit var objeto: ImageView
+    private lateinit var rightObjeto: ImageButton
+    private lateinit var leftObjeto: ImageButton
+    private lateinit var accept: Button
+    private lateinit var back: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upgrade_casino)
 
         initialize()
+        sliderObjeto()
+        botonesObjeto()
 
         rueda.setOnClickListener {
             girarRuleta()
@@ -42,11 +53,15 @@ class UpgradeCasinoActivity :AppCompatActivity(), TextToSpeech.OnInitListener {
             intent.putExtra("personaje", objPersonaje)
             startActivity(intent)
         }
-
     }
 
     @Suppress("DEPRECATION")
     private fun initialize() {
+        back = findViewById(R.id.backUpgrade)
+        accept = findViewById(R.id.acceptButton)
+        leftObjeto = findViewById(R.id.leftCasino)
+        rightObjeto = findViewById(R.id.rightCasino)
+        objeto = findViewById(R.id.itemCasinoImage)
         rueda = findViewById(R.id.wheel)
         backButton = findViewById(R.id.backUpgradeButton)
         tts = TextToSpeech(this, this)
@@ -54,6 +69,8 @@ class UpgradeCasinoActivity :AppCompatActivity(), TextToSpeech.OnInitListener {
         objPersonaje = intent.getParcelableExtra("personaje")!!
         barra = UtilBar(this, objPersonaje)
         barra.setupToolbar(this, R.id.barraOpciones)
+        ruleta = Ruleta(this, rueda)
+        ruleta.setArticulo(Articulo(Articulo.TipoArticulo.ORO,Articulo.Nombre.MONEDA,0,0,0))
     }
 
     private fun delayAndSpeak(text: String, tiempo: Long) {
@@ -75,12 +92,12 @@ class UpgradeCasinoActivity :AppCompatActivity(), TextToSpeech.OnInitListener {
         girar.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {}
             override fun onAnimationEnd(animation: Animation?) {
-//                val selectedOption = opcion(grado)
-//                Toast.makeText(
-//                    this@UpgradeCasinoActivity,
-//                    "Selected Option: $selectedOption",
-//                    Toast.LENGTH_SHORT
-//                ).show()
+                val selectedOption = ruleta.opcion(grado)
+                Toast.makeText(
+                    this@UpgradeCasinoActivity,
+                    "Selected Option: $selectedOption",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
             override fun onAnimationRepeat(animation: Animation?) {}
@@ -103,17 +120,13 @@ class UpgradeCasinoActivity :AppCompatActivity(), TextToSpeech.OnInitListener {
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             val idioma = tts.setLanguage(Locale.US)
-            if (idioma == TextToSpeech.LANG_MISSING_DATA
-                || idioma == TextToSpeech.LANG_NOT_SUPPORTED
-            ) {
+            if (idioma == TextToSpeech.LANG_MISSING_DATA || idioma == TextToSpeech.LANG_NOT_SUPPORTED) {
                 Log.e("TTS Error", "Lenguaje no admitido")
             } else {
-
                 Handler(Looper.getMainLooper()).postDelayed({
                     delayAndSpeak(rueda.contentDescription.toString(), 2000)
                     delayAndSpeak(backButton.text.toString(), 4000)
                 }, 10000)
-
             }
         } else {
             Log.e("TTS Error", "Error al cargar")
@@ -124,36 +137,69 @@ class UpgradeCasinoActivity :AppCompatActivity(), TextToSpeech.OnInitListener {
         return barra.onOptionsItemSelected(item) || super.onOptionsItemSelected(item)
     }
 
-//    private fun opcion(grados: Int): String {
-//        val opcion1: Pair<Int, Int>
-//        val opcion2: Pair<Int, Int>
-//
-////        if (Articulo.getNivel() == 1) {
-////            opcion1 = Pair(0, (360 * 0.4).toInt())
-////            opcion2 = Pair(opcion1.second, 360)
-////            rueda.setImageResource(R.drawable.wheel_forty)
-////        } else {
-////
-////            opcion1 = Pair(0, (360 * 0.2).toInt())
-////            opcion2 = Pair(opcion1.second, 360)
-////            rueda.setImageResource(R.drawable.wheel_twenty)
-////        }
-//
-//            // Verificar en qué rango de grados cayó la rueda
-////            return when (grados) {
-////                in opcion1.first until opcion1.second -> "Se mejora el artículo"
-////                in opcion2.first until opcion2.second -> "No se mejora el artículo"
-////                else -> "No option selected"
-////            }
-//
-//        }
-
     @Suppress("DEPRECATION")
     private fun speak(ttsText: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             tts.speak(ttsText, TextToSpeech.QUEUE_FLUSH, null, null)
         } else {
             tts.speak(ttsText, TextToSpeech.QUEUE_FLUSH, null)
+        }
+    }
+
+    private fun sliderObjeto() {
+        val db = DatabaseHelper(this)
+        val inventario = objPersonaje.getMochila().getContenido()
+        val inventarioHs = objPersonaje.getMochila().getContenido().toHashSet()
+
+        articulo = inventarioHs.elementAt(0)
+        objeto.setImageResource(db.getUrl(articulo))
+        var pos = 0
+
+        leftObjeto.setOnClickListener {
+            if (inventarioHs.indexOf(articulo) > 0) {
+                articulo = inventarioHs.elementAt(--pos)
+            } else {
+                pos = inventarioHs.size - 1
+                articulo = inventarioHs.elementAt(pos)
+            }
+            objeto.setImageResource(db.getUrl(articulo))
+        }
+
+        rightObjeto.setOnClickListener {
+            if (inventarioHs.indexOf(articulo) < (inventarioHs.size - 1)) {
+                articulo = inventarioHs.elementAt(++pos)
+            } else {
+                pos = 0
+                articulo = inventarioHs.elementAt(pos)
+            }
+            objeto.setImageResource(db.getUrl(articulo))
+        }
+    }
+
+    private fun botonesObjeto() {
+        if (accept.visibility == View.VISIBLE) {
+            accept.setOnClickListener {
+                if (articulo.getTipoArticulo() == Articulo.TipoArticulo.ORO) {
+                    Toast.makeText(this, "No puedes vender ORO", Toast.LENGTH_SHORT).show()
+                } else {
+                    objeto.visibility = View.GONE
+                    accept.visibility = View.GONE
+                    rightObjeto.visibility = View.GONE
+                    leftObjeto.visibility = View.GONE
+
+                    rueda.visibility = View.VISIBLE
+                    back.visibility = View.VISIBLE
+                }
+            }
+        }
+        back.setOnClickListener {
+            objeto.visibility = View.VISIBLE
+            accept.visibility = View.VISIBLE
+            rightObjeto.visibility = View.VISIBLE
+            leftObjeto.visibility = View.VISIBLE
+
+            rueda.visibility = View.GONE
+            back.visibility = View.GONE
         }
     }
 }

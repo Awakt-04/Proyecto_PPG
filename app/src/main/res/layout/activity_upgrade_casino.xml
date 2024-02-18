@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/leftCasino"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="28dp"
+        android:contentDescription="@string/ContentLeft"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/itemCasinoImage"
+        app:srcCompat="@drawable/arrow_left" />
+
+    <ImageButton
+        android:id="@+id/rightCasino"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="70dp"
+        android:contentDescription="@string/ContentRight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/itemCasinoImage"
+        app:srcCompat="@drawable/arrow_right" />
 
     <include
         android:id="@+id/barraCity"
@@ -26,10 +49,50 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:contentDescription="@string/ContentWheel"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/backUpgradeButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barraCity"
         app:srcCompat="@drawable/wheel_twenty" />
+
+    <Button
+        android:id="@+id/acceptButton"
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:text="@string/Accept"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/negro_transparente"
+        app:layout_constraintEnd_toStartOf="@+id/backUpgrade"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/leftCasino" />
+
+    <ImageView
+        android:id="@+id/itemCasinoImage"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:contentDescription="@string/ContentItem"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.303"
+        app:srcCompat="@drawable/item_meat" />
+
+    <Button
+        android:id="@+id/backUpgrade"
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="3dp"
+        android:text="@string/backButtonShop"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:backgroundTint="@color/negro_transparente"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/acceptButton"
+        app:layout_constraintTop_toBottomOf="@+id/wheel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

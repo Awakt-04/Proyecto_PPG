@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import java.util.GregorianCalendar
+import kotlin.random.Random
 
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, null, DATABASE_VERSION) {
     private val listaObjetos = arrayListOf(
@@ -319,7 +320,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, nul
                 put(COLUMN_NIVEL_OBJETOS_ALEATORIOS,0)
                 put(COLUMN_PESO_OBJETOS_ALEATORIOS, articulo.getPeso())
                 put(COLUMN_PRECIO_OBJETOS_ALEATORIOS, articulo.getPrecio())
-                put(COLUMN_UNIDADES_OBJETOS_ALEATORIOS, 3)
+                put(COLUMN_UNIDADES_OBJETOS_ALEATORIOS, Random.nextInt(6)+1)
                 put(COLUMN_URL_IMG_OBJETOS_ALEATORIOS, getUrl(articulo))
             }
             db.insert(TABLA_OBJETOS, null, values)
