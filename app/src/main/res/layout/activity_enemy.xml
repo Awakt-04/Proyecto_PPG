@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fondoEnemy"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/barraEnemy"
+        layout="@layout/toolbar_layout" />
+
+    <ImageView
+        android:id="@+id/enemyImage"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:contentDescription="@string/ContentEnemyImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barraEnemy"
+        app:srcCompat="@drawable/enemy_yakon" />
+
+    <Button
+        android:id="@+id/fightButton"
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:text="@string/FightButton"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/negro_transparente"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/fleeButton"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/fleeButton"
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:text="@string/FleeButton"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/negro_transparente"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/fightButton" />
+</androidx.constraintlayout.widget.ConstraintLayout>

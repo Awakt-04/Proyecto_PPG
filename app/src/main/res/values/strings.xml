@@ -1,0 +1,84 @@
+<resources>
+    <string name="app_name">awany</string>
+    <string name="Name">Nombre:</string>
+    <string name="Race">Raza:</string>
+    <string name="Class">Clase:</string>
+    <string name="VitalStatus">Estado Vital:</string>
+    <string-array name="Races">
+        <item>Humano</item>
+        <item>Elfo</item>
+        <item>Enano</item>
+        <item>Maldito</item>
+    </string-array>
+    <string-array name="Classes">
+        <item>Brujo</item>
+        <item>Guerrero</item>
+        <item>Mago</item>
+    </string-array>
+    <string-array name="VitalStatus2">
+        <item>Anciano</item>
+        <item>Adulto</item>
+        <item>Joven</item>
+    </string-array>
+    <string name="BackButton">Volver a creación</string>
+    <string name="ContinueButton1">Continuar Aventura</string>
+    <string name="CreationButton">Crear Personaje</string>
+    <string name="ImageClassDescription">Contiene la clase del personaje</string>
+    <string name="ImageCharacterDescription">Contiene la imagen del personaje</string>
+
+    <string name="ContentImageView">Contiene diversas imagenes de mapas</string>
+    <string name="ContenDice">Contiene un dado para obtener un número entre 1 y 6.</string>
+    <string name="DiceInfo">Comienza la aventura, pulsa el DADO para avanzar.\nCUIDADO, puedes encontrate enemigos</string>
+    <string name="ContinueButton">Continuar</string>
+    <string name="PickButton">Recoger</string>
+    <string name="ItemImage">Contiene un objeto</string>
+    <string name="ContentCityImage">Contiene una ciudad</string>
+    <string name="EnterButton">Entrar</string>
+    <string name="FightButton">Luchar</string>
+    <string name="FleeButton">Huir</string>
+    <string name="ContentEnemyImage">Encontraste a un enemigo</string>
+    <string name="ContentMerchantImage">Te has encontrado con un mercader</string>
+    <string name="CommerceButton">Comerciar</string>
+    <string name="IconCharacterDescription">Contiene el icono del personaje</string>
+    <string name="CreateCharacter">Crear Personaje</string>
+    <string name="buyButton">Comprar</string>
+    <string name="backButtonShop">Volver</string>
+    <string name="BagDescription">Mochila</string>
+    <string name="Rummage">Rebuscar entre la basura</string>
+    <string name="BackCity">Volver a la ciudad</string>
+    <string name="CasinoEnter">Entrar al casino</string>
+    <string name="Boxes">Tirar cajas o mejorar objetos</string>
+    <string name="BackCasino">Volver al casino</string>
+    <string name="GoldBox">Caja de oro</string>
+    <string name="ObjectBox">Caja de articulos</string>
+    <string name="Upgrade">Mejorar artículos</string>
+    <string name="ButtonCasino">Cancelar</string>
+    <string name="CityShopEnter">Entrar a la tienda</string>
+
+    <string name="PasswordBlankError">Contraseña vacía</string>
+    <string name="PasswordCapitalError">Contraseña sin mayúscula</string>
+    <string name="PasswordLengthError">Contraseña menor a 8 caracteres</string>
+    <string name="PasswordSimbolError">Contraseña sin símbolo</string>
+    <string name="PasswordNumberError">Contraseña sin número</string>
+    <string name="PasswordDifferent">Contraseñas distintas</string>
+
+    <string name="EmailBlankError">Email vacío</string>
+    <string name="EmailAtError">Email sin "@"</string>
+    <string name="EmailDomainError">Email sin dominio aceptado</string>
+    <string name="ContentMinus">Menos</string>
+    <string name="ContentPlus">Plus</string>
+    <string name="ContentLeft">Left Button</string>
+    <string name="ContentRight">Right Button</string>
+    <string name="ContentItem">Contiene un objeto</string>
+    <string name="LogIn">Iniciar Sesión</string>
+    <string name="Email">Email</string>
+    <string name="Password">Contraseña</string>
+    <string name="Register">Registrarse</string>
+    <string name="Password2">Repetir contraseña</string>
+    <string name="LogIn2">Ya tengo otra cuenta</string>
+    <string name="ContentCity">Contiene las distintas opciones de la ciudad</string>
+    <string name="ContentChat">Botón de chat</string>
+    <string name="ContentSendMessage">Botón enviar mensaje</string>
+    <string name="SendMessage">Enter your message</string>
+    <string name="sellButton">Vender</string>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fondoEnemyFight"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/barraEnemyFight"
+        layout="@layout/toolbar_layout" />
+
+    <Button
+        android:id="@+id/backEnemyFight"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="@string/backButtonShop"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/negro_transparente"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enemyFightImage" />
+
+    <ImageView
+        android:id="@+id/enemyFightImage"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barraEnemyFight" />
+</androidx.constraintlayout.widget.ConstraintLayout>

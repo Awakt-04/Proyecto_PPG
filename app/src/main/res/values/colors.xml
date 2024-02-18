@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="azulCieloOscuro">#086686</color>
+    <color name="naranja">#C65F0F</color>
+    <color name="background_brujo">#8833AA</color>
+    <color name="background_guerrero">#CC2221</color>
+    <color name="background_mago">#117722</color>
+    <color name="negro_transparente">#CC000000</color>
+    <color name="gris">#FF707070</color>
+</resources>

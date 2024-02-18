@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/play"
+        android:title="Play/Pause Music"
+        android:icon = "@drawable/icon_play"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/stop"
+        android:title="Stop music"
+        android:icon="@drawable/icon_stop"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/save"
+        android:icon="@drawable/save"
+        android:title="Guardar"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/Pj"
+        android:title="Personaje"
+        android:icon="@drawable/pj"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/backpack"
+        android:icon="@drawable/backpack"
+        android:title="Mochila"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/goldIcon"
+        android:icon="@drawable/obj_oro_moneda"
+        android:title="Oro"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/goldIconPlus"
+        android:icon="@android:drawable/btn_star_big_on"
+        android:title="OroPlus"
+        app:showAsAction="always"
+        />
+
+</menu>
