@@ -42,6 +42,17 @@ class Articulo(
         parcel.readInt()
     )
 
+    fun setPeso(pesoP:Int){
+        peso = pesoP
+    }
+
+    fun setPrecio(precioP: Int){
+        precio = precioP
+    }
+
+    fun setNivel(nivelP: Int){
+        nivel = nivelP
+    }
     fun getPeso() :Int{
         return peso
     }

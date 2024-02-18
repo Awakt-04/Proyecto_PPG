@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import kotlin.math.atan2
+import kotlin.random.Random
 
 class Ruleta(context: Context, private val imagen: ImageView) : View(context) {
     private lateinit var art: Articulo
@@ -24,6 +25,10 @@ class Ruleta(context: Context, private val imagen: ImageView) : View(context) {
             val resultado = opcion(gradosTocados)
 
             if (resultado) {
+                art.setPeso((art.getPeso() / 2).toInt())
+                art.setNivel(art.getNivel() + 1)
+                art.setPrecio((art.getPrecio() * 2))
+
                 Toast.makeText(context, "Se mejora el objeto", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, "No se mejora el objeto", Toast.LENGTH_SHORT).show()
@@ -52,24 +57,50 @@ class Ruleta(context: Context, private val imagen: ImageView) : View(context) {
     }
 
     internal fun opcion(grados: Int): Boolean {
-        val opcion1: Pair<Int, Int>
-        val opcion2: Pair<Int, Int>
-
+        var flag = false
+//        val opcion1: Pair<Int, Int>
+//        val opcion2: Pair<Int, Int>
+//
+//        if (art.getNivel() == 0) {
+//            opcion1 = Pair(0, (360 * 0.4).toInt())
+//            opcion2 = Pair(opcion1.second, 360)
+//            imagen.setImageResource(R.drawable.wheel_forty)
+//        } else {
+//            opcion1 = Pair(0, (360 * 0.2).toInt())
+//            opcion2 = Pair(opcion1.second, 360)
+//            imagen.setImageResource(R.drawable.wheel_twenty)
+//        }
+//
+//
+//        return when (grados) {
+//            in opcion1.first until opcion1.second -> true
+//            in opcion2.first until opcion2.second -> false
+//            else -> false
+//        }
         if (art.getNivel() == 0) {
-            opcion1 = Pair(0, (360 * 0.4).toInt())
-            opcion2 = Pair(opcion1.second, 360)
-            imagen.setImageResource(R.drawable.wheel_forty)
+
+            when (Random.nextInt(10) + 1) {
+                1, 3, 5, 7, 9, 10 -> {
+                    flag = false
+                }
+
+                2, 4, 6, 8 -> {
+                    flag = true
+                }
+            }
         } else {
-            opcion1 = Pair(0, (360 * 0.2).toInt())
-            opcion2 = Pair(opcion1.second, 360)
-            imagen.setImageResource(R.drawable.wheel_twenty)
+            when (Random.nextInt(10) + 1) {
+                1, 2, 3, 5, 6, 7, 9, 10 -> {
+                    flag = false
+                }
+
+                4, 8 -> {
+                    flag = true
+                }
+            }
         }
 
 
-        return when (grados) {
-            in opcion1.first until opcion1.second -> true
-            in opcion2.first until opcion2.second -> false
-            else -> false
-        }
+        return flag
     }
 }

@@ -92,14 +92,8 @@ class UpgradeCasinoActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         girar.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {}
             override fun onAnimationEnd(animation: Animation?) {
-                val selectedOption = ruleta.opcion(grado)
-                Toast.makeText(
-                    this@UpgradeCasinoActivity,
-                    "Selected Option: $selectedOption",
-                    Toast.LENGTH_SHORT
-                ).show()
+                ruleta.opcion(grado)
             }
-
             override fun onAnimationRepeat(animation: Animation?) {}
         })
 
