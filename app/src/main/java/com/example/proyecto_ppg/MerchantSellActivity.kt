@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 class MerchantSellActivity : AppCompatActivity() {
 
     private lateinit var tts: TextToSpeech
-    private lateinit var barra : UtilBar
+    private lateinit var barra: UtilBar
 
     private lateinit var imgObjeto: ImageView
     private lateinit var unidadesDeseadas: TextView
@@ -31,11 +31,8 @@ class MerchantSellActivity : AppCompatActivity() {
     private lateinit var sellButton: Button
     private lateinit var backButton: Button
 
-    private lateinit var objPersonaje : Personaje
+    private lateinit var objPersonaje: Personaje
     private lateinit var articulo: Articulo
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +46,7 @@ class MerchantSellActivity : AppCompatActivity() {
     }
 
     @Suppress("DEPRECATION")
-    private fun initialize(){
+    private fun initialize() {
         backButton = findViewById(R.id.backCreation)
         sellButton = findViewById(R.id.button)
         imgObjeto = findViewById(R.id.itemShopImage)
@@ -61,13 +58,15 @@ class MerchantSellActivity : AppCompatActivity() {
         unidadesDisponiblesText = findViewById(R.id.itemCount)
 
         objPersonaje = intent.getParcelableExtra("personaje")!!
-        barra = UtilBar(this,objPersonaje)
-        barra.setupToolbar(this,R.id.barraOpciones)
+        barra = UtilBar(this, objPersonaje)
+        barra.setupToolbar(this, R.id.barraOpciones)
 
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return barra.onOptionsItemSelected(item) || super.onOptionsItemSelected(item)
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         barra.onCreateOptionsMenu(menu)
         return true
@@ -80,18 +79,23 @@ class MerchantSellActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val unidadesDisponibles = objPersonaje.getMochila().getContenido().count { articulo == it } //Articulo es asignado en sliderObjeto
+            val unidadesDisponibles = objPersonaje.getMochila().getContenido()
+                .count { articulo == it } //Articulo es asignado en sliderObjeto
             val unidadesAVender = unidadesDeseadas.text.toString().toInt()
 
-            if(unidadesAVender <= unidadesDisponibles) {
+            if (unidadesAVender <= unidadesDisponibles) {
                 for (i in 1..unidadesAVender)
                     objPersonaje.delArticulo(articulo)
 
                 unidadesDisponiblesText.text =
                     (unidadesDisponiblesText.text.toString().toInt() - unidadesAVender).toString()
                 Toast.makeText(this, "Tu venta ha sido exitosa", Toast.LENGTH_SHORT).show()
-            }else
-                Toast.makeText(this, "No tienes suficientes unidades para vender", Toast.LENGTH_SHORT).show()
+            } else
+                Toast.makeText(
+                    this,
+                    "No tienes suficientes unidades para vender",
+                    Toast.LENGTH_SHORT
+                ).show()
         }
 
 
@@ -103,7 +107,7 @@ class MerchantSellActivity : AppCompatActivity() {
 
     }
 
-    private fun sliderObjeto(){
+    private fun sliderObjeto() {
         val db = DatabaseHelper(this)
         val inventario = objPersonaje.getMochila().getContenido()
         val inventarioHs = objPersonaje.getMochila().getContenido().toHashSet()
@@ -115,9 +119,9 @@ class MerchantSellActivity : AppCompatActivity() {
 
 
         leftObjeto.setOnClickListener {
-            if (inventarioHs.indexOf(articulo) > 0){
+            if (inventarioHs.indexOf(articulo) > 0) {
                 articulo = inventarioHs.elementAt(--pos)
-            }else{
+            } else {
                 pos = inventarioHs.size - 1
                 articulo = inventarioHs.elementAt(pos)
             }
@@ -127,9 +131,9 @@ class MerchantSellActivity : AppCompatActivity() {
 
 
         rightObjeto.setOnClickListener {
-            if (inventarioHs.indexOf(articulo) < (inventarioHs.size - 1)){
+            if (inventarioHs.indexOf(articulo) < (inventarioHs.size - 1)) {
                 articulo = inventarioHs.elementAt(++pos)
-            }else{
+            } else {
                 pos = 0
                 articulo = inventarioHs.elementAt(pos)
             }

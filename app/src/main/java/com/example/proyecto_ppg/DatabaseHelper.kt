@@ -11,15 +11,15 @@ import java.util.GregorianCalendar
 
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, null, DATABASE_VERSION) {
     private val listaObjetos = arrayListOf(
-        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.BASTON, 2, 4),
-        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.ESPADA, 2, 4),
-        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.DAGA, 2, 4),
-        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.MARTILLO, 2, 4),
-        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.GARRAS, 2, 4),
-        Articulo(Articulo.TipoArticulo.PROTECCION, Articulo.Nombre.ESCUDO, 2, 4),
-        Articulo(Articulo.TipoArticulo.PROTECCION, Articulo.Nombre.ARMADURA, 2, 4),
-        Articulo(Articulo.TipoArticulo.OBJETO, Articulo.Nombre.POCION, 2, 4),
-        Articulo(Articulo.TipoArticulo.OBJETO, Articulo.Nombre.IRA, 2, 4),
+        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.BASTON, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.ESPADA, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.DAGA, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.MARTILLO, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.GARRAS, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.PROTECCION, Articulo.Nombre.ESCUDO, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.PROTECCION, Articulo.Nombre.ARMADURA, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.OBJETO, Articulo.Nombre.POCION, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.OBJETO, Articulo.Nombre.IRA, 0, 2, 4),
     )
 
     companion object {
@@ -29,6 +29,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, nul
         private const val KEY_ID_OBJETOS_ALEATORIOS = "_id"
         private const val COLUMN_TIPO_ARTICULO_OBJETOS_ALEATORIOS = "tipo_articulo"
         private const val COLUMN_NOMBRE_OBJETOS_ALEATORIOS = "nombre"
+        private const val COLUMN_NIVEL_OBJETOS_ALEATORIOS = "nivel"
         private const val COLUMN_PESO_OBJETOS_ALEATORIOS = "peso"
         private const val COLUMN_URL_IMG_OBJETOS_ALEATORIOS = "url_img"
         private const val COLUMN_UNIDADES_OBJETOS_ALEATORIOS = "unidades"
@@ -53,6 +54,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, nul
         private const val TABLA_CONTENIDO_MOCHILA = "contenidoMochila"
         private const val COLUMN_TIPO_ARTICULO = "tipo_articulo"
         private const val COLUMN_NOMBRE_ARTICULO = "nombre_articulo"
+        private const val COLUMN_NIVEL_ARTICULO = "nivel"
         private const val COLUMN_PESO = "peso"
         private const val COLUMN_PRECIO = "precio"
         private const val COLUMN_UNIDADES = "unidades"
@@ -68,6 +70,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, nul
                 "$KEY_ID_OBJETOS_ALEATORIOS INTEGER PRIMARY KEY," +
                 " $COLUMN_TIPO_ARTICULO_OBJETOS_ALEATORIOS TEXT," +
                 "$COLUMN_NOMBRE_OBJETOS_ALEATORIOS TEXT," +
+                "$COLUMN_NIVEL_OBJETOS_ALEATORIOS INTEGER," +
                 " $COLUMN_PESO_OBJETOS_ALEATORIOS INTEGER," +
                 " $COLUMN_PRECIO_OBJETOS_ALEATORIOS INTEGER," +
                 " $COLUMN_UNIDADES_OBJETOS_ALEATORIOS INTEGER," +
@@ -92,6 +95,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, nul
         val createTableMochila = "CREATE TABLE IF NOT EXISTS $TABLA_CONTENIDO_MOCHILA (" +
                 "$COLUMN_TIPO_ARTICULO TEXT," +
                 " $COLUMN_NOMBRE_ARTICULO TEXT," +
+                "$COLUMN_NIVEL_ARTICULO INTEGER," +
                 "$COLUMN_PESO INTEGER," +
                 " $COLUMN_PRECIO INTEGER," +
                 " $COLUMN_UNIDADES INTEGER," +
@@ -168,7 +172,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, nul
     fun recogerOro(precio: Int, uid: String): Articulo? {
         var articuloOro: Articulo? = null
         if (oroDisponible(uid)) {
-            articuloOro = Articulo(Articulo.TipoArticulo.ORO, Articulo.Nombre.MONEDA, 0, precio)
+            articuloOro = Articulo(Articulo.TipoArticulo.ORO, Articulo.Nombre.MONEDA, 0, 0, precio)
             val db = this.writableDatabase
             val selectQuery = "UPDATE $TABLA_ORO SET $COLUMN_ULTIMO_DIA_RECOGIDO = '${GregorianCalendar().timeInMillis}' WHERE $FK_ID_AUTH = '$uid'"
             db.execSQL(selectQuery)
@@ -206,6 +210,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, nul
             values = ContentValues().apply {
                 put(COLUMN_TIPO_ARTICULO, item.getTipoArticulo().toString())
                 put(COLUMN_NOMBRE_ARTICULO, item.getNombre().toString())
+                put(COLUMN_NIVEL_ARTICULO,0)
                 put(COLUMN_PESO, item.getPeso())
                 put(COLUMN_PRECIO, item.getPrecio())
                 put(COLUMN_UNIDADES, contenidoMochila.count { item == it })
@@ -255,10 +260,12 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, nul
                                 cursorMochila.getColumnIndex(COLUMN_NOMBRE_ARTICULO)
                             )
                         )
+                        val nivel = cursorMochila.getInt(cursorMochila.getColumnIndex(
+                            COLUMN_NIVEL_ARTICULO))
                         val peso = cursorMochila.getInt(cursorMochila.getColumnIndex(COLUMN_PESO))
                         val precio =
                             cursorMochila.getInt(cursorMochila.getColumnIndex(COLUMN_PRECIO))
-                        val articulo = Articulo(tipoArticulo, nombreArticulo, peso, precio)
+                        val articulo = Articulo(tipoArticulo, nombreArticulo, nivel, peso, precio)
                         contenido.add(articulo)
                     } while (cursorMochila.moveToNext())
                 }
@@ -309,6 +316,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, nul
             val values = ContentValues().apply {
                 put(COLUMN_TIPO_ARTICULO_OBJETOS_ALEATORIOS, articulo.getTipoArticulo().toString())
                 put(COLUMN_NOMBRE_OBJETOS_ALEATORIOS, articulo.getNombre().toString())
+                put(COLUMN_NIVEL_OBJETOS_ALEATORIOS,0)
                 put(COLUMN_PESO_OBJETOS_ALEATORIOS, articulo.getPeso())
                 put(COLUMN_PRECIO_OBJETOS_ALEATORIOS, articulo.getPrecio())
                 put(COLUMN_UNIDADES_OBJETOS_ALEATORIOS, 3)
@@ -446,12 +454,13 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE, nul
                         cursor.getColumnIndex(COLUMN_NOMBRE_OBJETOS_ALEATORIOS)
                     )
                 )
+                val nivel = cursor.getInt(cursor.getColumnIndex(COLUMN_NIVEL_OBJETOS_ALEATORIOS))
                 val peso = cursor.getInt(cursor.getColumnIndex(COLUMN_PESO_OBJETOS_ALEATORIOS))
                 val precio =
                     cursor.getInt(cursor.getColumnIndex(COLUMN_PRECIO_OBJETOS_ALEATORIOS)) //Podriamos poner una funcion en el init de la clase Articulo para que el precio lo haga alli y no poner el precio en el sql
 //                val unidades = cursor.getInt(cursor.getColumnIndex(COLUMN_UNIDADES))
 //                val urlImage = cursor.getInt(cursor.getColumnIndex(COLUMN_URL_IMG))
-                objetos.add(Articulo(tipoArticulo, nombre, peso, precio))
+                objetos.add(Articulo(tipoArticulo, nombre, nivel, peso, precio))
             } while (cursor.moveToNext())
         }else {
             //Si es la primera vez hace una funcion recursiva para insertar objetos en la tabla

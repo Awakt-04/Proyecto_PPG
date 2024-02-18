@@ -35,16 +35,16 @@ class ItemActivity :AppCompatActivity(), OnInitListener {
     private lateinit var dbHelper: DatabaseHelper
 
     private val listaObjetos = arrayListOf(
-        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.BASTON, 2, 4),
-        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.ESPADA, 2, 4),
-        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.DAGA, 2, 4),
-        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.MARTILLO, 2, 4),
-        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.GARRAS, 2, 4),
-        Articulo(Articulo.TipoArticulo.PROTECCION, Articulo.Nombre.ESCUDO, 2, 4),
-        Articulo(Articulo.TipoArticulo.PROTECCION, Articulo.Nombre.ARMADURA, 2, 4),
-        Articulo(Articulo.TipoArticulo.OBJETO, Articulo.Nombre.POCION, 2, 4),
-        Articulo(Articulo.TipoArticulo.OBJETO, Articulo.Nombre.IRA, 2, 4),
-        Articulo(Articulo.TipoArticulo.ORO, Articulo.Nombre.MONEDA, 2, 15)
+        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.BASTON, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.ESPADA, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.DAGA, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.MARTILLO, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.ARMA, Articulo.Nombre.GARRAS, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.PROTECCION, Articulo.Nombre.ESCUDO, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.PROTECCION, Articulo.Nombre.ARMADURA, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.OBJETO, Articulo.Nombre.POCION, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.OBJETO, Articulo.Nombre.IRA, 0, 2, 4),
+        Articulo(Articulo.TipoArticulo.ORO, Articulo.Nombre.MONEDA, 0, 2, 15)
     )
 
     private var fondoId = 0

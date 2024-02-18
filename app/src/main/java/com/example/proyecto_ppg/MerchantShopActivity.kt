@@ -84,7 +84,7 @@ open class MerchantShopActivity :AppCompatActivity(), OnInitListener {
 
                         for (i in 1..unidadesDeseadas.text.toString().toInt())
                             objPersonaje.addArticulo(articulo)
-                        objPersonaje.delArticulo(Articulo(Articulo.TipoArticulo.ORO, Articulo.Nombre.MONEDA, 0, precioTotalCompra))
+                        objPersonaje.delArticulo(Articulo(Articulo.TipoArticulo.ORO, Articulo.Nombre.MONEDA, 0,0, precioTotalCompra))
                         dbHelper.setUnidades(articulo, unidadesDisponibles - unidadesAComprar)
 
                         Toast.makeText(this, "Has comprado $unidadesAComprar unidades de ${articulo.getNombre()}", Toast.LENGTH_SHORT).show()

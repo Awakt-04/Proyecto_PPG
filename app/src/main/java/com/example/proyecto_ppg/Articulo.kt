@@ -27,8 +27,9 @@ import java.util.Objects
 class Articulo(
     private var tipoArticulo :TipoArticulo,
     private var nombre :Nombre,
+    private var nivel: Int,
     private var peso :Int,
-    private var precio: Int //float por ahora no
+    private var precio: Int
 ) : Parcelable {
     enum class TipoArticulo {ARMA, OBJETO, PROTECCION, ORO}
     enum class Nombre {BASTON, ESPADA, DAGA, MARTILLO, GARRAS, POCION, IRA, ESCUDO, ARMADURA, MONEDA}
@@ -36,6 +37,7 @@ class Articulo(
     constructor(parcel: Parcel) : this(
         TipoArticulo.valueOf(parcel.readString()!!),
         Nombre.valueOf(parcel.readString()!!),
+        parcel.readInt(),
         parcel.readInt(),
         parcel.readInt()
     )
@@ -52,6 +54,9 @@ class Articulo(
 
     fun getPrecio() : Int {
         return precio
+    }
+    fun getNivel(): Int{
+        return nivel
     }
 
     fun getAumentoAtaque() :Int{
@@ -122,6 +127,7 @@ class Articulo(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(tipoArticulo.toString())
         parcel.writeString(nombre.toString())
+        parcel.writeInt(nivel)
         parcel.writeInt(peso)
         parcel.writeInt(precio)
     }

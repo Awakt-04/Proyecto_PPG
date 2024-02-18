@@ -81,10 +81,10 @@ class Mochila(
                 Articulo.TipoArticulo.ORO -> {
                     when (articulo.getNombre()) {
                         Articulo.Nombre.MONEDA -> {
-                            val oroActual = contenido.find { Articulo.TipoArticulo.ORO == it.getTipoArticulo() && Articulo.Nombre.MONEDA == it.getNombre()} ?: Articulo(Articulo.TipoArticulo.ORO, Articulo.Nombre.MONEDA, 0, 0)
+                            val oroActual = contenido.find { Articulo.TipoArticulo.ORO == it.getTipoArticulo() && Articulo.Nombre.MONEDA == it.getNombre()} ?: Articulo(Articulo.TipoArticulo.ORO, Articulo.Nombre.MONEDA, 0, 0, 0)
                             contenido.remove(oroActual)
                             val oroSuma = oroActual.getPrecio() + articulo.getPrecio()
-                            contenido.add(Articulo(Articulo.TipoArticulo.ORO, Articulo.Nombre.MONEDA, 0, oroSuma))
+                            contenido.add(Articulo(Articulo.TipoArticulo.ORO, Articulo.Nombre.MONEDA, 0, 0, oroSuma))
 
                         }
                         else -> {
@@ -111,7 +111,7 @@ class Mochila(
         }else{
             precio = -articulo.getPrecio() //Para restar al oro
         }
-        val oro = Articulo(Articulo.TipoArticulo.ORO, Articulo.Nombre.MONEDA, 0, precio)
+        val oro = Articulo(Articulo.TipoArticulo.ORO, Articulo.Nombre.MONEDA, 0, 0, precio)
         addArticulo(oro)
 
     }

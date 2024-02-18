@@ -26,7 +26,7 @@ class ShowCharacterActivity : AppCompatActivity() {
 
         continueButton.setOnClickListener {
             val intent = Intent(this, DiceActivity::class.java)
-            objPersonaje.addArticulo(Articulo(Articulo.TipoArticulo.ORO, Articulo.Nombre.MONEDA, 0, 0))
+            objPersonaje.addArticulo(Articulo(Articulo.TipoArticulo.ORO, Articulo.Nombre.MONEDA, 0, 0, 0))
             val db = DatabaseHelper(this)
             db.insertarPersonaje(objPersonaje)
             intent.putExtra("personaje", objPersonaje)
